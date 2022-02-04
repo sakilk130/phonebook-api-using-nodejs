@@ -21,7 +21,7 @@ const createNewContact = asyncHandler(async (req, res) => {
 });
 
 // @desc Get contact by mobile
-// @desc route POST /api/contacts/:mobile
+// @desc route GET /api/contacts/:mobile
 // @access Public
 // @return {json} mixed
 const getContactByMobile = asyncHandler(async (req, res) => {
@@ -33,4 +33,50 @@ const getContactByMobile = asyncHandler(async (req, res) => {
   res.status(200).json(contact);
 });
 
-export { createNewContact, getContactByMobile };
+// @desc Get all contact
+// @desc route GET /api/contacts
+// @access Public
+// @return {json} mixed
+const getContacts = asyncHandler(async (req, res) => {
+  const contacts = await Contact.find();
+  res.json(contacts);
+});
+
+// @desc Update a contact
+// @desc route PUT /api/contacts/:mobile
+// @access Public
+// @return {json} mixed
+const updateContact = asyncHandler(async (req, res) => {
+  const contact = await Contact.findOne({ mobile: req.params.mobile });
+  if (!contact) {
+    res.status(404);
+    throw new Error('Contact not found');
+  }
+  contact.name = req.body.name || contact.name;
+  contact.mobile = req.body.mobile || contact.mobile;
+  const updatedContact = await contact.save();
+  res.json(updatedContact);
+});
+
+// @desc Delete a contact
+// @desc route DELETE /api/contacts/:mobile
+// @access Public
+// @return {json} mixed
+const deleteContact = asyncHandler(async (req, res) => {
+  const contact = await Contact.findOne({ mobile: req.params.mobile });
+
+  if (!contact) {
+    res.status(404);
+    throw new Error('Contact not found');
+  }
+  await contact.remove();
+  res.json({ message: 'Contact removed' });
+});
+
+export {
+  createNewContact,
+  getContactByMobile,
+  getContacts,
+  updateContact,
+  deleteContact,
+};
