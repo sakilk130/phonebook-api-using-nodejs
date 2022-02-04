@@ -20,4 +20,17 @@ const createNewContact = asyncHandler(async (req, res) => {
   res.status(201).json(createContact);
 });
 
-export { createNewContact };
+// @desc Get contact by mobile
+// @desc route POST /api/contacts/:mobile
+// @access Public
+// @return {json} mixed
+const getContactByMobile = asyncHandler(async (req, res) => {
+  const contact = await Contact.findOne({ mobile: req.params.mobile });
+  if (!contact) {
+    res.status(404);
+    throw new Error('Contact not found');
+  }
+  res.status(200).json(contact);
+});
+
+export { createNewContact, getContactByMobile };
