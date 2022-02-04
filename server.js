@@ -4,6 +4,7 @@ import colors from 'colors';
 
 import connectDB from './config/db.js';
 import contactRoutes from './routes/contact.routes.js';
+import { errorHandler, notFound } from './middleware/error.middleware.js';
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,9 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 app.use('/api/contacts', contactRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(
   PORT,
