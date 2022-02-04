@@ -1,5 +1,6 @@
 import Contact from '../models/Contact.js';
 import asyncHandler from 'express-async-handler';
+import yup from 'yup';
 
 // @desc Create new contact
 // @desc route POST /api/contacts
@@ -7,6 +8,25 @@ import asyncHandler from 'express-async-handler';
 // @return {json} mixed
 const createNewContact = asyncHandler(async (req, res) => {
   const { name, mobile } = req.body;
+  // input data validation
+  const createContactSchema = yup.object().shape({
+    name: yup.string().trim().required(),
+    mobile: yup
+      .string()
+      .trim()
+      .min(11)
+      .max(11)
+      .required()
+      .matches(/^(?:(?:\+|00)88|01)?\d{11}/, 'Mobile number is not valid'),
+  });
+
+  try {
+    await createContactSchema.validate({ name, mobile });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+
   const contactExists = await Contact.findOne({ mobile });
   if (contactExists) {
     res.status(400);
