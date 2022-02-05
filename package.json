@@ -5,7 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "data:import": "node seeder",
+    "data:destroy": "node seeder -d"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +17,9 @@
     "colors": "^1.4.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
-    "mongoose": "^6.2.0"
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.2.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
