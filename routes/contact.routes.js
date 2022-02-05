@@ -8,10 +8,11 @@ import {
   updateContact,
 } from '../controllers/contact.controller.js';
 
-router.route('/').post(createNewContact);
-router.route('/:mobile').get(getContactByMobile);
-router.route('/').get(getContacts);
-router.route('/:mobile').put(updateContact);
-router.route('/:mobile').delete(deleteContact);
+router.route('/').get(getContacts).post(createNewContact);
+router
+  .route('/:mobile')
+  .get(getContactByMobile)
+  .put(updateContact)
+  .delete(deleteContact);
 
 export default router;

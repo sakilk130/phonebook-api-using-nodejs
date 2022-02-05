@@ -24,6 +24,18 @@ Run it
 npm start
 ```
 
+Data import
+
+```
+npm run data:import
+```
+
+Data destroy
+
+```
+npm run data:destroy
+```
+
 _API endpoints_
 
 | path                    | method |                               |
