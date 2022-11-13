@@ -18,7 +18,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
-    "mongoose": "^6.2.0",
+    "mongoose": "^6.4.6",
     "yup": "^0.32.11"
   },
   "devDependencies": {
